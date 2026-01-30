@@ -1,0 +1,166 @@
+<div *ngIf="loading$.getValue()" class="d-flex justify-content-center">
+    <div class="spinner-border text-primary m-5" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+
+<div *ngIf="!loading$.getValue()">
+
+    <div class="d-flex mt-5 py-2 title">
+        
+        <button class="btn btn-outline-light btn-sm" (click)="goBack()">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <h1> {{ (detailTvService.serieDetail$ | async)?.title }} </h1>
+    </div>
+
+
+    <!-- ******************************************* -->
+    <!-- *************** INFOS FICHE ***************-->
+    <!-- ******************************************* -->
+
+    <div *ngIf="detailTvService.serieDetail$ | async as serie" class="row detail">
+
+        <div class="flex-container">
+
+
+        <div class="affiche">
+            <img [src]="getImgFullUrl(serie.posterPath)" alt="">
+        </div>
+
+
+        <div>
+            <button *ngIf="this.isAuth && !loadingAllWishEpisodes$.getValue()" [class]="wishStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="wishTitleButton" (click)="updateStatusWishButton()">
+                <span><i class="fa-regular fa-bookmark"></i></span>Wish
+            </button>
+            <button *ngIf="loadingAllWishEpisodes$.getValue()" [class]="wishStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="wishTitleButton">
+                <span class="spinner-border spinner-border-sm text-primary"></span>Wish
+            </button>
+
+            <button *ngIf="this.isAuth && !loadingAllWatchEpisodes$.getValue()" [class]="watchStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="watchTitleButton" (click)="updateStatusWatchButton()">
+                <span><i class="fa-solid fa-eye"></i></span>Watch
+            </button>
+            <button *ngIf="loadingAllWatchEpisodes$.getValue()" [class]="watchStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="watchTitleButton">
+                <span class="spinner-border spinner-border-sm text-light"></span>Watch
+            </button>
+
+            <p style="font-size: 1.3em; color: rgba(93,27,235); margin-top: 10px;">Moyenne des votes  <span class="badge bg-info text-dark">{{serie?.voteAverage | number:'1.1-1' }}</span></p> 
+            
+            <h2>Popularité: <span>{{serie?.popularity | number:'1.2-2' }}</span></h2>
+            
+            <h2>Nombre de votes: <span>{{serie?.voteCount}}</span></h2>
+            
+            <h2>Date de sortie: <span>{{ serie?.firstAirDate | date:'dd-MM-yyyy' }}</span></h2>
+
+            <h2>Résumé</h2>
+            <p>{{serie?.resume}}</p>
+
+            <h2>Genres</h2>
+            <p>
+                <span class="badge rounded-pill bg-primary" *ngFor="let genre of serie.genres">{{ genre.name }}</span>
+            </p>
+
+            <h2>Statut</h2>
+            <p class="badge rounded-pill bg-warning text-dark">{{serie?.status}}</p>
+        </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- *************************************** -->
+    <!-- *************** SAISONS ***************-->
+    <!-- *************************************** -->
+
+    <div *ngIf="detailTvService.seasonDetail$ | async as saisons" class="row detail">
+        <div class="flex-container-season">
+            <div class="accordion" id="accordion-saison">
+                <div *ngFor="let season of detailSeasons" class="accordion-item">
+                <h2 class="accordion-header" id="heading{{season.seasonNumber}}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + season.seasonNumber" aria-expanded="ture" [attr.aria-controls]="'collapse' + season.seasonNumber">
+                        {{season.seasonNumber == 0 ? "Episodes spéciaux":"Saison "+season.seasonNumber }}
+                        <div *ngIf="this.isAuth" class="menu-saison">
+                            <i [class]="this.mapWishSeason.get(season.id)?.cssIconOn? this.mapWishSeason.get(season.id)?.cssIconOn:_wishStatusIconSeasonOff" 
+                                [title]="this.mapWishSeason.get(season.id)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
+                                style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.id)">
+                            </i>
+                            <i [class]="this.mapWatchSeason.get(season.id)?.cssIconOn? this.mapWatchSeason.get(season.id)?.cssIconOn:_watchStatusIconSeasonOff" 
+                                [title]="this.mapWatchSeason.get(season.id)?.cssIconOn? _watchTitleIconSeasonOn:_watchTitleIconSeasonOff"
+                                style="color: #0D6EFD;" (click)="updateStatusWatchSeason(season.id)">
+                            </i>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapse{{season.seasonNumber}}" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + season.seasonNumber" data-bs-parent="#accordion-saison">
+                    <div class="accordion-body">
+
+                        <!-- INFO SAISON -->
+                        
+                        <div class="flex-container">
+                            <div class="affiche-season">
+                                <img [src]="getImgSeasonFullUrl(season.posterPath)" alt="">
+                            </div>
+                            <div>
+                                <div *ngIf="this.isAuth" class="mini-menu">
+                                    <i [class]="this.mapWishSeason.get(season.id)?.cssIconOn? this.mapWishSeason.get(season.id)?.cssIconOn:_wishStatusIconSeasonOff" 
+                                        [title]="this.mapWishSeason.get(season.id)?.cssIconOn? _wishTitleIconSeasonOn:_wishTitleIconSeasonOff"
+                                        style="color: yellow; margin-right: 10px;" (click)="updateStatusWishSeason(season.id)">
+                                    </i>
+                                    <i [class]="this.mapWatchSeason.get(season.id)?.cssIconOn? this.mapWatchSeason.get(season.id)?.cssIconOn:_watchStatusIconSeasonOff" 
+                                        [title]="this.mapWatchSeason.get(season.id)?.cssIconOn? _watchTitleIconSeasonOn:_watchTitleIconSeasonOff"
+                                        style="color: #0D6EFD; margin-right: 10px;" (click)="updateStatusWatchSeason(season.id)">
+                                    </i>
+                                </div>                     
+                                <p><strong>Date de sortie: </strong> {{season.airDate | date:'dd-MM-yyyy' }}</p>
+                                <p><strong>Episodes: </strong> {{season.episodes.length}}</p>
+                                <p><strong>Résumé: </strong> {{season.overview?season.overview:"Non disponible"}}</p>
+                            </div>
+                        </div>
+                            <!-- LISTE EPISODES -->
+                        <div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col"></th>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Diffusion</th>
+                                    <th scope="col">Note</th>
+                                    <th scope="col">Résumé</th>
+                                    <th *ngIf="this.isAuth" scope="col">Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let episode of season.episodes">
+                                    <td class="align-middle"><img src="https://image.tmdb.org/t/p/w92{{ episode.stillPath }}"></td>
+                                    <th class="align-middle" scope="row">{{ episode.episodeNumber }}</th>
+                                    <td class="align-middle" style="width: 100px;">{{ episode.airDate?(episode.airDate | date:"dd-MM-yyyy"):"-" }}</td>
+                                    <td class="align-middle"><span class="badge bg-info text-dark" style="font-size: 1em;">{{ episode.voteAverage?(episode.voteAverage | number:'1.1-1'):"-" }}</span></td>
+                                    <td class="align-middle">{{ episode.overview?episode.overview:"Non disponible"}}</td>
+                                    <td *ngIf="this.isAuth" class="align-middle" style="width: 100px;">
+                                        <i [class]="this.mapWishEpisode.get(episode.id)?.cssIconOn?this.mapWishEpisode.get(episode.id)?.cssIconOn:_wishStatusIconEpisodeOff" 
+                                            [title]="this.mapWishEpisode.get(episode.id)?.cssIconOn? _wishTitleIconEpisodeOn:_wishTitleIconEpisodeOff"
+                                            style="color: yellow; margin-right: 10px;" 
+                                            (click)="updateStatusWishEpisode(season.id, episode.id)">
+                                        </i>
+                                        <i [class]="this.mapWatchEpisode.get(episode.id)?.cssIconOn?this.mapWatchEpisode.get(episode.id)?.cssIconOn:_watchStatusIconEpisodeOff" 
+                                        [title]="this.mapWatchEpisode.get(episode.id)?.cssIconOn? _watchTitleIconEpisodeOn:_watchTitleIconEpisodeOff"
+                                        style="color: #0D6EFD; margin-right: 10px;" 
+                                        (click)="updateStatusWatchEpisode(season.id, episode.id)">
+                                    </i>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

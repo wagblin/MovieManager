@@ -1,0 +1,19 @@
+<div class="overviewContainer">
+  <div class="titre">
+    <h3>Séries vues</h3>
+  </div>
+    
+    
+    <div class="cdk-virtual-scroll-data-source-example">
+      <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+          <!-- <div *cdkVirtualFor="let watchtv of watchtvs" class="example-item"> -->
+          <div [routerLink]="['/detailtv', tvWatch.id]"  *ngFor="let tvWatch of tvsWatch" class="example-item">
+            <div>
+              <img [src]="getImgFullUrl(tvWatch.image_portrait)" alt="">
+            </div>
+            {{tvWatch.titre}}
+          </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+      
+  </div>

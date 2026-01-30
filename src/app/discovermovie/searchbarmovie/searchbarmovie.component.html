@@ -1,0 +1,21 @@
+<input #field (keyup)="onKeyupInput(field.value)" type="text" class="form-control" placeholder="Rechercher des films...">
+
+<ul *ngIf="searchedMovies.length>0"> 
+  <li [routerLink]="['/detailmovie',movie.idMovie]" *ngFor="let movie of searchedMovies">
+    <h5>{{movie?.title}}</h5>
+    <div class="row">
+      <div class="col">
+        <div class="image-container">
+          <img [src]="getImgFullUrl(movie.posterPath)" alt="">
+        </div>
+      </div>
+      <div class="col-10">
+        <h6>Date de sortie : {{ movie?.releaseDate | date:'dd/MM/yyyy' }}</h6>
+        <h4>Résumé :</h4>
+        <p>{{movie?.overview}}</p>
+      </div>
+    </div>
+  </li>
+</ul>
+
+

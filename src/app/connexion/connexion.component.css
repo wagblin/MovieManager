@@ -1,0 +1,45 @@
+.ligne {
+  list-style: none;
+}
+
+.dialog{
+  color: rgb(140, 120, 160);
+}
+
+.connected{
+  color: rgb(140, 120, 160);
+}
+
+.connexion{
+  color: rgb(140, 120, 160);
+}
+
+hr {
+  color: rgb(140, 120, 160);
+}
+
+p.error {
+    color:rgb(194, 65, 65);
+}
+
+.modal-sheet .modal-dialog {
+    width: 380px;
+    transition: bottom .75s ease-in-out;
+    
+  }
+  .modal-sheet .modal-footer {
+    padding-bottom: 2rem;
+  }
+  
+  .modal-alert .modal-dialog {
+    width: 380px;
+  }
+  
+  .modal-tour .modal-dialog {
+    width: 380px;
+  }
+
+  .modal {
+    color: black;
+  }
+  

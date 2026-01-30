@@ -1,0 +1,51 @@
+<div class="row justify-content-center">
+
+  <div *ngIf="userSvc.isAuth()" class="col-12 col-md-6 connected">
+    <h1>Hello, vous êtes connecté(e)</h1>
+
+
+      <!-- <p>Username : {{ userData.username?userData.username:'' }}</p> -->
+      <p>Email : {{ userData.email?userData.email:'' }}</p>
+      <!-- <p>ID : {{ userData.id?userData.id:'' }}</p> -->
+
+
+      <button class="btn btn-light" (click)="userSvc.logout()">
+        Déconnexion
+      </button>
+  </div>
+
+  <form *ngIf="!userSvc.isAuth()" class="col-12 col-md-6 connexion" [formGroup]="connexion" (submit)="onSubmit()">
+    <h1>Connexion</h1>  
+    <label class="form-label">Email</label>
+    <input class="form-control" placeholder="user@domaine" formControlName="email" type="text">
+    
+    <p class="error" 
+      *ngIf="connexion.touched && 
+            connexion.controls['email'].errors?.['required']">Email requis</p>
+    <p class="error" 
+      *ngIf="connexion.touched && 
+            connexion.controls['email'].errors?.['email']">Veuillez saisir un email valide</p>
+
+
+    <label class="form-label">Mot de passe</label>
+    <input class="form-control" placeholder="5 caractères mini" formControlName="password" type="password">
+    <p class="error" 
+      *ngIf="connexion.controls['password'].dirty &&
+            connexion.touched && 
+            connexion.controls['password'].hasError('required')">Le mot de passe est requis</p>
+    <p class="error" 
+      *ngIf="connexion.controls['password'].dirty &&
+            connexion.touched &&
+            connexion.controls['password'].hasError('minlength')">Veuillez saisir un password valide (taille 5 mini)</p>
+
+    <div class="d-flex justify-content-right">
+      <button class="btn btn-dark btn-smd mt-2">Se connecter</button>
+      <button class="btn btn-light btn-smd mt-2" routerLink="/inscription">Inscription</button>
+      <!-- <i routerLink="/inscription" class="nav-link btn" class="fa-solid fa-pen-nib"></i> -->
+    </div>
+    
+      
+  </form>
+    
+</div>
+

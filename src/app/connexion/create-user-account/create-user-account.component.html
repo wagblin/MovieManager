@@ -1,0 +1,95 @@
+<div class="row justify-content-center">
+
+  
+    <form class="col-lg-5 col-md-3" [formGroup]="formInscription" (submit)="createAccount()">
+
+        <h1>Création de votre compte</h1>
+
+        <label class="form-label">Email</label>
+        <input class="form-control" placeholder="user@domaine" formControlName="email" type="text">
+        <p class="error" 
+            *ngIf="formInscription.touched && formInscription.controls['email'].errors?.['required']">Email requis</p>
+        <p class="error" 
+            *ngIf="formInscription.touched && formInscription.controls['email'].errors?.['email']">Veuillez saisir un email valide</p>
+  
+  
+        <label class="form-label">Mot de passe</label>
+        <input class="form-control" placeholder="5 caractères mini" formControlName="password" type="password">
+        <p class="error" 
+            *ngIf="formInscription.controls['password'].dirty &&
+                    formInscription.touched && 
+                    formInscription.controls['password'].hasError('required')">Le mot de passe est requis</p>
+        <p class="error" 
+            *ngIf="formInscription.controls['password'].dirty &&
+                    formInscription.touched &&
+                    formInscription.controls['password'].hasError('minlength')">Veuillez saisir un password valide (taille 5 mini)</p>
+
+
+        <label class="form-label">Pseudo</label>
+        <input class="form-control" placeholder="" formControlName="pseudo" type="text">
+
+        <label class="form-label">Année de naissance</label>
+        <input class="form-control" placeholder="" formControlName="birthYear" type="text">
+        <p class="error" 
+        *ngIf="formInscription.controls['birthYear'].dirty &&
+                formInscription.touched && 
+                formInscription.controls['birthYear'].hasError('required')">L'année de naissance est requise</p>
+                <p class="error" 
+            *ngIf="formInscription.controls['birthYear'].dirty &&
+                    formInscription.touched &&
+                    (formInscription.controls['birthYear'].hasError('minlength') || formInscription.controls['birthYear'].hasError('maxlength'))">Veuillez saisir une année valide (4 chiffres) entre 1900 et 2023</p>
+
+        <div *ngIf="formInscription.controls['birthYear'].valid && +formInscription.controls['birthYear'].value <= 2005">
+          <label class="form-label" >Adult content</label>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" value="true" formControlName="adultContent">
+              <label class="form-check-label" for="flexRadioDefault1">
+                Oui
+              </label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" value="false" formControlName="adultContent" checked>
+              <label class="form-check-label" for="flexRadioDefault1">
+                Non
+              </label>
+          </div>
+      </div>
+
+        <br>
+        
+        MOVIE GENRE
+        <label class="form-label">Catégories préférées de films</label>
+        <div class="form-check" *ngFor="let movieGenre of movieGenreRef">
+            <input class="form-check-input" type="checkbox" value="{{movieGenre.id}}" id="MovieGenre{{movieGenre.name}}" formControlName="movieGenre" (change)="onCheckboxChangeMovie($event)">
+            <label class="form-check-label" for="MovieGenre{{movieGenre.name}}">
+              {{movieGenre.name}}
+            </label>
+        </div>
+
+        SERIE GENRE
+        <label class="form-label">Catégories préférées de séries TV</label>
+        <div class="form-check" *ngFor="let serieGenre of serieGenreRef">
+            <input class="form-check-input" type="checkbox" value="{{serieGenre.id}}" id="MovieGenre{{serieGenre.name}}" formControlName="serieGenre" (change)="onCheckboxChangeSerie($event)">
+            <label class="form-check-label" for="MovieGenre{{serieGenre.name}}">
+              {{serieGenre.name}}
+            </label>
+        </div>
+
+        <!-- ABONNEMENT STREAMING -->
+        <!-- <label class="form-label">Abonnement(s) VOD</label>
+        <div class="form-check" *ngFor="let streaming of streamingSubsciptionRef">
+            <input class="form-check-input" type="checkbox" value="{{streaming.id}}" id="MovieGenre{{streaming.name}}" formControlName="streamingSubs" (change)="onCheckboxChangeStreaming($event)">
+            <label class="form-check-label" for="MovieGenre{{streaming.name}}">
+              {{streaming.name}}
+            </label>
+        </div> -->
+        
+    
+  
+      <div class="d-flex justify-content-right">
+        <button class="btn btn-dark btn-smd mt-2">Valider</button>
+      </div>
+        
+    </form>
+      
+  </div>

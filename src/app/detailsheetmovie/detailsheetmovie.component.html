@@ -1,0 +1,82 @@
+
+
+<div class="d-flex mt-5 py-2 title">
+
+  <button class="btn btn-outline-light btn-sm" (click)="goBack()">
+      <i class="fas fa-arrow-left"></i>
+  </button>
+  <h1>{{ (movieSvc.getMovieDetail$() | async )?.title }}</h1>
+</div>
+
+
+
+
+
+
+<div *ngIf="movieSvc.getMovieDetail$() | async as movie" class="row detail">
+
+
+  <div class="flex-container">
+
+
+    <div class="affiche">
+      <img [src]="getImgFullUrl(movie.posterPath)" alt="">
+    </div>
+
+
+    <div>
+      <button *ngIf="this.isAuth" [class]="wishStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="wishTitleButton" (click)="updateStatusWishButton()">
+        <span><i class="fa-regular fa-bookmark"></i></span>Wish
+      </button>
+
+      <button *ngIf="this.isAuth" [class]="watchStatusButton" data-bs-toggle="tooltip" data-bs-placement="top" [title]="watchTitleButton" (click)="updateStatusWatchButton()">
+        <span><i class="fa-solid fa-check"></i></span>Watch
+      </button>
+
+      <!-- <h2>Moyenne des votes: <span>{{movie?.voteAverage}}</span></h2> -->
+      <p style="font-size: 1.3em; color: rgba(93,27,235); margin-top: 10px;">Moyenne des votes  <span class="badge bg-info text-dark">{{movie?.voteAverage | number:'1.1-1' }}</span></p> 
+      
+      <h2>Popularité: <span>{{movie?.popularity  | number:'1.2-2'}}</span></h2>
+      
+      <h2>Nombre de votes: <span>{{movie?.voteCount?movie.voteCount:"non disponible"}}</span></h2>
+      
+      <h2>Date de sortie: <span>{{ movie?.releaseDate | date:'dd-MM-yyyy' }}</span></h2>
+
+      <h2>Résumé</h2>
+      <p>{{movie?.overview}}</p>
+
+      <h2>Genres</h2>
+      <p>
+        <span class="badge rounded-pill bg-primary" *ngFor="let genre of movie.genres">{{ genre.name}}</span>
+      </p>
+
+      <h2>Durée: <span>{{ movie.runtime | printDuration }}</span></h2>
+
+    </div>
+  </div> 
+
+
+
+</div>
+
+
+
+      <!-- <p><span><i class="fa-solid fa-couch"></i></span> : "cinema home file" </p>
+      <p>
+        <i class="fa-solid fa-star fa-lg"></i>
+        <i class="fa-solid fa-star fa-lg"></i>
+        <i class="fa-solid fa-star fa-lg"></i>
+        <i class="fa-solid fa-star-half-stroke fa-lg"></i>
+        <i class="fa-regular fa-star fa-lg"></i>
+      </p>
+      <p>
+        <i class="fa-regular fa-face-angry fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Pourri"></i>
+        <i class="fa-regular fa-face-frown fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Nul"></i>
+        <i class="fa-regular fa-face-frown-open fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Nul"></i>
+        <i class="fa-regular fa-face-meh fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Bof"></i>
+        <i class="fa-regular fa-face-grin fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Bien"></i>
+        <i class="fa-regular fa-face-smile-beam fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Très Bien"></i>
+        <i class="fa-regular fa-face-laugh fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Excellent"></i>
+        <i class="fa-regular fa-face-grin-stars fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="A ne pas manquer"></i>
+        <i class="fa-regular fa-face-grin-hearts fa-2xl" data-bs-toggle="tooltip" data-bs-placement="top" title="Coup de coeur"></i>
+      </p> -->

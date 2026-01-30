@@ -1,0 +1,11 @@
+<div class="libraryContainer">
+    <h2>Bibliothèque de séries TV</h2>
+    <div *ngIf="this.isAuth">
+        <app-overview-wish-tv></app-overview-wish-tv>
+        <hr>
+        <app-overview-watch-tv></app-overview-watch-tv>
+    </div>
+    <div *ngIf="!this.isAuth">
+        <p>Merci de vous authentifier auparavant!</p>
+    </div>      
+</div>

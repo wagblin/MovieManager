@@ -1,0 +1,10 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web&display=swap');
+
+body {
+    font-size: .875rem;
+    font-family: 'Titillium Web', sans-serif;
+    background-color: rgb(13, 13, 78) !important;
+    /* color: rgb(140, 120, 160); */
+    color: rgb(255, 255, 255);
+  }

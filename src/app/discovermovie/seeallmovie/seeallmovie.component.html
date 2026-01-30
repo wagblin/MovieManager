@@ -1,0 +1,30 @@
+<div class="row pt-3 pb-5 seeall">
+  <h2 class="text-center">Découvrir des films</h2>
+
+  <div *ngFor="let movie of movies" class="col-12  col-lg-2 col-md-4">
+
+    <div [routerLink]="['/detailmovie',movie.idMovie]" class="card bg-dark flex">
+      <img [src]="getImgFullUrl(movie.backdropPath)" alt="">
+      <div class="mini-menu">
+          <i *ngIf="this.isAuth" [class]="movie._wishStatusIcon" 
+            [title]="movie._wishTitleIcon"
+            style="color: yellow; margin-right: 10px;"
+            (click)="updateStatusWishIcon(movie)
+            ; $event.preventDefault(); $event.stopPropagation()">
+          </i>
+          <i *ngIf="this.isAuth" [class]="movie._watchStatusIcon" 
+            [title]="movie._watchTitleIcon"
+            style="color: #0D6EFD;"
+            (click)="updateStatusWatchIcon(movie)
+            ; $event.preventDefault(); $event.stopPropagation()">
+          </i>
+        </div>            
+        <div class="card-body">
+          <h2>{{movie.title}}</h2>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+<app-actionbarmovie></app-actionbarmovie>

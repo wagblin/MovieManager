@@ -1,0 +1,32 @@
+<div class="overviewContainer">
+  <div class="titre">
+    <div><p>Film</p></div>
+    <!-- <div><h2>Tendance</h2></div> -->
+  </div>
+    
+  <div class="cdk-virtual-scroll-data-source-example">
+    <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+      <div [routerLink]="['/detailmovie', recoMovie.idMovie]"  *ngFor="let recoMovie of recoMovies" class="example-item">
+        <div>
+          <img [src]="getImgFullUrl(recoMovie.posterPath)" alt="">
+          <div class="mini-menu1">
+            <i  *ngIf="this.isAuth" [class]="recoMovie._wishStatusIcon" 
+              [title]="recoMovie._wishTitleIcon"
+              style="color: yellow; margin-right: 0px; margin-left: 55px;"
+              (click)="updateStatusWishIcon(recoMovie)
+              ; $event.preventDefault(); $event.stopPropagation()">
+            </i>
+            <i  *ngIf="this.isAuth" [class]="recoMovie._watchStatusIcon" 
+              [title]="recoMovie._watchTitleIcon"
+              style="color: #0D6EFD; margin-right: 5px; margin-left: 5px;"
+              (click)="updateStatusWatchIcon(recoMovie)
+              ; $event.preventDefault(); $event.stopPropagation()">
+            </i>
+          </div>
+        </div>
+        {{recoMovie.title}}
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </div>
+      
+  </div>

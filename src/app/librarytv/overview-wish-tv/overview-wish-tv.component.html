@@ -1,0 +1,19 @@
+<div class="overviewContainer">
+  <div class="titre">
+    <h3>Séries à voir</h3>
+    <!-- <div><h2>Bibliothèque de séries TV</h2></div> -->
+  </div>
+    
+    <div class="cdk-virtual-scroll-data-source-example">
+      <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+        <div [routerLink]="['/detailtv', tvWish.id]"  *ngFor="let tvWish of tvsWish" class="example-item">
+            <div>
+              <img [src]="getImgFullUrl(tvWish.image_portrait)" alt="">
+            </div>
+            {{tvWish.titre}}
+        </div>
+      </cdk-virtual-scroll-viewport>
+      
+    </div>
+      
+  </div>

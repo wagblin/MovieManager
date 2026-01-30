@@ -1,0 +1,28 @@
+<div class="row pt-3 pb-5 seeall">
+    <h2 class="text-center">Découvrir des séries TV</h2>
+
+    <div *ngFor="let tv of tvs" class="col-12  col-lg-2 col-md-4">
+
+        <div [routerLink]="['/detailtv',tv.id]" class="card bg-dark flex">
+            <img [src]="getImgFullUrl(tv.image_landscape)" alt="">
+            <div *ngIf="this.isAuth" class="mini-menu">
+                <i [class]="this.mapWishSerie.get(tv.id)?.cssIconOn? this.mapWishSerie.get(tv.id)?.cssIconOn:_wishStatusIconSerieOff" 
+                    [title]="this.mapWishSerie.get(tv.id)?.cssIconOn? _wishTitleIconSerieOn:_wishTitleIconSerieOff"
+                    style="color: yellow;" 
+                    (click)="updateStatusWishSerie(tv.id); $event.preventDefault(); $event.stopPropagation()">
+                </i>
+                <i [class]="this.mapWatchSerie.get(tv.id)?.cssIconOn? this.mapWatchSerie.get(tv.id)?.cssIconOn:_watchStatusIconSerieOff" 
+                    [title]="this.mapWatchSerie.get(tv.id)?.cssIconOn? _watchTitleIconSerieOn:_watchTitleIconSerieOff"
+                    style="color: blue;" 
+                    (click)="updateStatusWatchSerie(tv.id); $event.preventDefault(); $event.stopPropagation()">
+                </i>
+            </div>
+            <div class="card-body">
+                <h2>{{tv.titre}}</h2>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<app-actionbartv></app-actionbartv>

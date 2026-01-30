@@ -1,0 +1,19 @@
+<div class="overviewContainer">
+  <div class="titre">
+    <div><p>Films vus</p></div>
+  </div>
+    
+    
+    <div class="cdk-virtual-scroll-data-source-example">
+      <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+          <!-- <div *cdkVirtualFor="let watchMovie of watchMovies" class="example-item"> -->
+          <div [routerLink]="['/detailmovie', movieWatch.idMovie]"  *ngFor="let movieWatch of watchMovies" class="example-item">
+            <div>
+              <img [src]="getImgFullUrl(movieWatch.posterPath)" alt="">
+            </div>
+            {{movieWatch.title}}
+          </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+      
+  </div>

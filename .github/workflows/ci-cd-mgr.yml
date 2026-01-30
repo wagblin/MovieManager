@@ -1,0 +1,77 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: CI/CD Serveur MGR
+
+on:
+  push:
+    branches: [ develop ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+
+  #####################################################
+  ## CI : INTEGRATION                                ##
+  ## npm install, build, and test                    ##
+  ## archive dist-without-markdown dist/moviemanager ##
+  #####################################################
+    
+  CI_install_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: npm install, build, and test
+        run: |
+          npm install
+          npm run build --if-present
+          # npm test
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-without-markdown
+          path: |
+            #dist
+            dist/moviemanager
+            !dist/**/*.md
+
+  ######################################################
+  ## CD : DEPLOYMENT                                  ##
+  ## Download dist-without-markdown dist/moviemanager ##
+  ## Deploy to Netlify                                ##
+  ######################################################
+
+  CD_deploy_to_netlify:
+    needs: CI_install_build
+    runs-on: ubuntu-latest
+    steps:
+      
+      - uses: actions/checkout@v2
+
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-without-markdown
+          path: dist/moviemanager
+      - name: Create _redirects netlify file
+        run: |
+          echo "${{ secrets._REDIRECTS }}" > dist/moviemanager/_redirects
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.2
+
+        with:
+          publish-dir: './dist/moviemanager'
+          production-branch: develop
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1

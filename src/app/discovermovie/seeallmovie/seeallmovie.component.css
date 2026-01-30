@@ -1,0 +1,53 @@
+p {
+    color: rgb(140, 120, 160);
+
+}
+.seeall {
+    color: rgb(140, 120, 160);
+}
+
+div > img {
+    position: relative;
+    width: 100%;
+    
+}
+
+/* img {
+    height: 150px;
+    width: 300px;
+} */
+
+.mini-menu {
+    /* display: block; */
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    top: 12px;
+    width: 44px;
+    height: 20px;
+    right: 4px;
+    /* border: 1px solid white; */
+}
+
+div.card {
+    border:none;
+    margin-bottom: 20px;
+}
+
+div.card:hover {
+    border: 3px solid rgba(93,27,235);
+}
+div.card-body {
+    background: #19152f;
+}
+
+div.card h2 {
+    color:white;
+    font-size : 1.1em;
+}
+
+div > img:hover {
+    opacity: 40%;
+    transition: 0.5s;
+    cursor: pointer;
+}

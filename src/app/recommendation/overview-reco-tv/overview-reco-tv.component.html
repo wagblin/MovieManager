@@ -1,0 +1,40 @@
+<div class="overviewContainer">
+  <div class="titre">
+    <div><p>Série TV</p></div>
+  </div>
+    
+    <div class="cdk-virtual-scroll-data-source-example">
+      <cdk-virtual-scroll-viewport orientation="horizontal" itemSize="50" class="example-viewport">
+          <!-- <div *cdkVirtualFor="let watchMovie of watchMovies" class="example-item"> -->
+          <div [routerLink]="['/detailtv', recoTv.idTv]"  *ngFor="let recoTv of recoTvs" class="example-item">
+            <div>
+              <img [src]="getImgFullUrl(recoTv.posterPath)" alt="">
+              <div class="mini-menu1">
+                <i [class]="recoTv._wishStatusIcon" 
+                  [title]="recoTv._wishTitleIcon"
+                  style="color: yellow; margin-right: 0px; margin-left: 55px;"
+                  (click)="updateStatusWishIcon(recoTv)
+                  ; $event.preventDefault(); $event.stopPropagation()">
+                </i>
+                <i [class]="recoTv._watchStatusIcon" 
+                  [title]="recoTv._watchTitleIcon"
+                  style="color: #0D6EFD; margin-right: 5px; margin-left: 5px;"
+                  (click)="updateStatusWatchIcon(recoTv)
+                  ; $event.preventDefault(); $event.stopPropagation()">
+                </i>
+              </div>
+              <div class="mini-menu2">
+                <i [class]="recoTv._blackStatusIcon" 
+                  [title]="recoTv._blackTitleIcon"
+                  style="color: #ffffff; margin-right: 5px; margin-left: 10px;"
+                  (click)="postBlackList(recoTv)
+                  ; $event.preventDefault(); $event.stopPropagation()">
+                </i>
+              </div>
+            </div>
+            {{recoTv.originalName}}
+          </div>
+      </cdk-virtual-scroll-viewport>
+    </div>
+      
+  </div>

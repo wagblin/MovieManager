@@ -1,0 +1,138 @@
+.feather {
+  width: 16px;
+  height: 16px;
+}
+
+/*************************
+******** Side Bar ********
+**************************/
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  /* rtl:raw:
+  right: 0;
+  */
+  bottom: 0;
+  /* rtl:remove */
+  left: 0;
+  z-index: 100; /* Behind the navbar */
+  padding: 10px 0 0; /* Height of navbar */
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  /* box-shadow: 1px 1px 4px 4px rgb(140 120 160 / 15%); */
+  background-color: rgb(15, 15, 50) !important;
+  /* color: rgb(140, 120, 160); */
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
+}
+
+.sidebar-sticky {
+  height: calc(100vh - 48px);
+  overflow-x: hidden;
+  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+.sidebar .nav-link {
+  font-weight: 500;
+  /* color: #333; */
+  color: rgb(140, 120, 160);
+}
+
+.sidebar p {
+  font-weight: 500;
+  /* color: #333; */
+  color: rgb(140, 120, 160);
+}
+
+.sidebar .nav-link .feather {
+  margin-right: 4px;
+  color: #727272;
+}
+
+/* .sidebar > .nav-link.active {
+  color: #2470dc;
+} */
+
+.sidebar .feather,
+.sidebar .nav-link.active .feather {
+  color: inherit;
+}
+
+.sidebar .nav-link:hover {
+  color: #2470dc;
+}
+
+.sidebar-heading {
+  font-size: .75rem;
+}
+
+.sidebar-heading span{
+  color: #2470dc;
+}
+
+
+/***********************
+******** Navbar ********
+************************/
+
+
+.navbar{
+  background-color: rgb(15, 15, 50) !important;
+  /* color: rgb(140, 120, 160); */
+  /* color: rgb(227, 17, 49); */
+
+}
+.navbar-brand {
+  padding-top: .75rem;
+  /* padding-bottom: .75rem; */
+  /* background-color: rgba(0, 0, 0, .25); */
+  /* box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25); */
+  /* box-shadow: 1px 1px 4px 4px rgb(253, 13, 13); */
+  /* color: #9c71d9 */
+  color: rgb(140, 120, 160);
+  /* color: rgb(113 13 253); */
+  /* color: aqua; */
+  
+}
+
+.navbar-nav{
+  /* background-color: rgb(15, 15, 50) !important; */
+  /* font-size: 2em; */
+  /* color: rgb(140, 120, 160); */
+  /* color: rgb(113 13 253); */
+  /* color: rgb(140, 120, 160); */
+
+}
+
+.navbar .navbar-toggler {
+  top: .5rem;
+  left: 10rem;
+  right: 10rem;
+  /* color: rgb(140, 120, 160); */
+  /* background-color: rgb(15, 15, 50) !important; */
+}
+
+.navbar i{
+  font-size: 1.5em;
+  color: rgb(140, 120, 160);
+}
+
+/* .navbar .form-control {
+  padding: .75rem 1rem;
+}
+
+.form-control-dark {
+  color: #fff;
+  background-color: rgba(255, 255, 255, .1);
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.form-control-dark:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+} */
+
